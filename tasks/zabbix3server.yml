@@ -1,0 +1,8 @@
+- name: Copy template zabbix_server.conf
+  template: src=zabbix_server.conf.j2 dest=/etc/zabbix/zabbix_server.conf
+  notify: Restart zabbix-server
+
+- name: Add timezone line to PHP
+  lineinfile: dest=/etc/php5/apache2/php.ini regexp=^;date.timezone line=date.timezone=America/Sao_Paulo
+  notify: Restart apache 
+

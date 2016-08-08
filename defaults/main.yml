@@ -1,0 +1,4 @@
+---
+# defaults file for ansible-zabbix3server
+
+zabbix3server_database_password: 123456A!

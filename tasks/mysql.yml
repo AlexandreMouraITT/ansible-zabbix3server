@@ -1,0 +1,24 @@
+#- name: install python mysql bindings
+#  apt: name=python-mysqldb state=present
+
+- name: Change MySQL root password
+  mysql_user: name=root host={{ item }} password={{ zabbix3server_database_password }}
+  with_items:
+    - 127.0.0.1	
+    - ::1
+    - localhost
+
+- name: Create my.cnf
+  template: src=my.cnf.j2 dest=/root/.my.cnf owner=root group=root mode=0600
+
+
+- name: Create MySQL DB
+  mysql_db: name=zabbix state=present
+  register: create_db
+
+- name: Import MySQL structure
+  mysql_db: name=zabbix state=import target=/usr/share/doc/zabbix-server-mysql/create.sql.gz
+  when: create_db.changed != False  
+
+- name: Grant privileges to MySQL DB
+  mysql_user: name=zabbix password={{zabbix3server_database_password }} priv=zabbix.*:ALL state=present

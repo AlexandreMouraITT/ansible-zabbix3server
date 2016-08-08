@@ -1,0 +1,12 @@
+---
+
+- name: Install zabbix3 Repository
+  apt: deb=http://repo.zabbix.com/zabbix/3.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.0-1+trusty_all.deb state=present
+
+- name: Update cache
+  apt: update_cache=yes cache_valid_time=3600
+ 
+- name: Install packages
+  apt: name={{ item}} state=present
+  with_items: "{{ zabbrix3server_packages }}"
+  notify: Restart zabbix-server

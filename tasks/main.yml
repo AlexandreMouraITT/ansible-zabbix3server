@@ -1,0 +1,11 @@
+---
+# tasks file for ansible-zabbix3server
+
+- name: Include OS - specific tasks
+  include: "{{ ansible_distribution }}.yml"
+
+- name: Include MySQL configuration
+  include: mysql.yml
+
+- name: Include Zabbix3 configuration
+  include: zabbix3server.yml

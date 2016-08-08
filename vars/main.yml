@@ -1,0 +1,8 @@
+---
+# vars file for ansible-zabbix3server
+
+zabbrix3server_packages:
+  - zabbix-server-mysql 
+  - zabbix-frontend-php
+
+
